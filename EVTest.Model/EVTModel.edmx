@@ -11,7 +11,7 @@
           </Key>
           <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Photo" Type="image" />
+          <Property Name="Photo" Type="varbinary(max)" />
           <Property Name="Price" Type="float" Nullable="false" />
           <Property Name="LastUpdate" Type="datetime" />
         </EntityType>
