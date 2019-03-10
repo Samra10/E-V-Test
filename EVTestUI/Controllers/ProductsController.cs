@@ -21,13 +21,22 @@ namespace EVTestUI.Controllers
 
         // GET: Products
         string Baseurl = "http://localhost:14518/api/product";
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string searchString)
         {
-            List<Product> ProductInfo = await GetAllData();
+            List<Product> ProductInfo = new List<Product>();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                ProductInfo = await GetByName(searchString);
+            }
+            else
+            {
+                 ProductInfo = await GetAllData();
+            }
 
             
-                //returning the Product list to view  
-                return View(ProductInfo);
+             //returning the Product list to view  
+             return View(ProductInfo);
         }
 
         // GET: Products/Details/5
@@ -250,6 +259,37 @@ namespace EVTestUI.Controllers
 
                 //Sending request to find web api REST service resource GET using HttpClient  
                 HttpResponseMessage Res = await client.GetAsync(Baseurl);
+
+                //Checking the response is successful or not which is sent using HttpClient  
+                if (Res.IsSuccessStatusCode)
+                {
+                    //Storing the response details recieved from web api   
+                    var EmpResponse = Res.Content.ReadAsStringAsync().Result;
+
+                    //Deserializing the response recieved from web api and storing into the Product list  
+                    ProductInfo = JsonConvert.DeserializeObject<List<Product>>(EmpResponse);
+
+                }
+
+            }
+            return ProductInfo;
+        }
+
+        private async Task<List<Product>> GetByName(string name)
+        {
+            List<Product> ProductInfo = new List<Product>();
+
+            using (var client = new HttpClient())
+            {
+                //Passing service base url  
+                client.BaseAddress = new Uri(Baseurl);
+
+                client.DefaultRequestHeaders.Clear();
+                //Define request data format  
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                //Sending request to find web api REST service resource GET using HttpClient  
+                HttpResponseMessage Res = await client.GetAsync("product?name=" + name);
 
                 //Checking the response is successful or not which is sent using HttpClient  
                 if (Res.IsSuccessStatusCode)

@@ -131,5 +131,19 @@ namespace EVTest.DAL
                 throw ex;
             }
         }
+
+        /// <summary>
+        /// Queries the entities.
+        /// </summary>
+        /// <param name="name">The name of the product.</param>
+        /// <returns></returns>
+        public List<Product> searchByName(string name)
+        {
+            var pr = from p in DataContext.Products
+                           select p;
+
+            pr = pr.Where(p => p.ProductName.Contains(name) );
+            return pr.ToList();
+        }
     }
 }

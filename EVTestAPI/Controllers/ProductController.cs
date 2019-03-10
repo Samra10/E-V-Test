@@ -26,6 +26,12 @@ namespace EVTestAPI.Controllers
             return _productManagerBase.GetById(id);
         }
 
+        [ResponseType(typeof(List<Product>))]
+        public List<Product> GetProduct_search(string name)
+        {
+            return _productManagerBase.searchByName(name);
+        }
+
         [HttpPost]
         public void PostProduct([FromBody]Product pr)
         {

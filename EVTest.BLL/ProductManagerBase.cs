@@ -76,5 +76,10 @@ namespace EVTest.BLL
             _productDataService.Update(pr);
             return pr;
         }
+
+        public List<Product> searchByName(string name)
+        {
+            return _productDataService.searchByName(name);
+        }
     }
 }
