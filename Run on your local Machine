@@ -1,0 +1,16 @@
+How to Run this solution on your local server
+
+1-  Download or Clone the SQL Script in the repo "EVTest".
+2-  Open this Script on SQL Management Studio and Excute it.
+      *Refresh the Server you must see "EVTest" on your Database list.
+3-  Clone The entire solution and open it in Visual Studio.
+4-  Select " View ==> Server Explorer".
+5-  Right Click on "Data Connections" select "Add Conection".
+6-  Select your Server Name, then Select "EVTest" from "Database list" and OK
+7-  Right Click on the new Connection and Select "Refresh".
+8-  Right Click on the new Connection and Select "Properties".
+9-  From "Connection String" Copy "Data Source=XXXXXX".
+10- Open "Web.Config" file in "EVTest.Model" Project.
+11- Replace the "Data Source=XXXXX" with "Data Source" in the connection String.
+12- Make the same thing but with "Web.Config" in "EVTest.UI" Project.
+13- Rebuild the Solution, and Enjoy.
