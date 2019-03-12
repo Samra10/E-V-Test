@@ -83,8 +83,14 @@ namespace EVTestUI.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult create(Product pr)
+        public ActionResult create(Product pr, HttpPostedFileBase image1)
         {
+            if(image1 != null)
+            {
+                pr.Photo = new byte[image1.ContentLength];
+                image1.InputStream.Read(pr.Photo, 0, image1.ContentLength);
+            }
+
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(Baseurl);
@@ -126,7 +132,7 @@ namespace EVTestUI.Controllers
                     pr = readTask.Result;
                 }
             }
-            pr.LastUpdate = DateTime.Now;
+            
             return View(pr);
         }
 
@@ -135,8 +141,14 @@ namespace EVTestUI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Product pr)
+        public ActionResult Edit(Product pr, HttpPostedFileBase image1)
         {
+            if (image1 != null)
+            {
+                pr.Photo = new byte[image1.ContentLength];
+                image1.InputStream.Read(pr.Photo, 0, image1.ContentLength);
+            }
+            pr.LastUpdate = DateTime.Now;
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(Baseurl);
